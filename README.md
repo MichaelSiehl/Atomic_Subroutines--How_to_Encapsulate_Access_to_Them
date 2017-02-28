@@ -14,3 +14,15 @@ end type OOOPimsc_adtImageStatus_CA<br />
 !<br />
 ! Coarray Declaration:<br />
 type (ImageStatus_CA), public, codimension[*], save :: ImageStatus_CA_1<br />
+
+# How to Encapsulate Access to atomic_define:
+Encapsulating access to atomic_define is very straightforward: We can easily use a traditional style setter routine to do so. See the following code example:<br />
+
+subroutine Set_atomic_intImageActivityFlag_CA (Object_CA, intImageActivityFlag, intImageNumber)<br />
+&nbsp;&nbsp;type (ImageStatus_CA), codimension[*], intent (inout) :: Object_CA<br />
+&nbsp;&nbsp;integer, intent (in) :: intImageActivityFlag<br />
+&nbsp;&nbsp;integer, intent (in) :: intImageNumber<br />
+&nbsp;&nbsp;!<br />
+&nbsp;&nbsp;call atomic_define (Object_CA[intImageNumber] % m_atomic_intImageActivityFlag, intImageActivityFlag)<br />
+&nbsp;&nbsp;!<br />
+end subroutine Set_atomic_intImageActivityFlag_CA<br />

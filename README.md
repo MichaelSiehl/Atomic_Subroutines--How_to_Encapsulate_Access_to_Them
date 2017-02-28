@@ -26,3 +26,6 @@ subroutine Set_atomic_intImageActivityFlag_CA (Object_CA, intImageActivityFlag, 
 &nbsp;&nbsp;call atomic_define (Object_CA[intImageNumber] % m_atomic_intImageActivityFlag, intImageActivityFlag)<br />
 &nbsp;&nbsp;!<br />
 end subroutine Set_atomic_intImageActivityFlag_CA<br />
+
+# How to Encapsulate Access to atomic_ref:
+The first reflex to encapsulate access to atomic_ref may be to use a traditional style getter routine to do so. But the problem with atomic_ref is it's use in conjunction with a spin-wait loop synchronization and the required SYNC MEMORY statement after the atomic data transfer took place. Since we want to keep the call to atomic_ref apart form the spin-wait loop (also because of the spin-wait loop may not be part of the parallel logic code), and also want to keep the SYNC MEMORY statement at a place of it's own in the parallel logic code, we use a checker routine instead of a getter routine. See the following code example:

@@ -69,6 +69,6 @@ do ! check the ImageActivityFlag in local PGAS memory until it has<br />
 end do<br />
 ...<br />
 
-That way, the logic codes (parallel or main logic codes) remain without any call to atomic_ref and without any direct use of the SYNC MEMORY statement.
+That way, the logic codes (parallel or main logic codes) remain without any direct call to atomic_ref and without any direct use of the SYNC MEMORY statement.
 
 (As an aside: In practice, spin-wait loop synchronizations must be implemented much more sophisticated then shown here).

@@ -29,3 +29,22 @@ end subroutine Set_atomic_intImageActivityFlag_CA<br />
 
 # How to Encapsulate Access to atomic_ref:
 The first reflex to encapsulate access to atomic_ref may be to use a traditional style getter routine to do so. But the problem with atomic_ref is it's use in conjunction with a spin-wait loop synchronization and the required SYNC MEMORY statement after the atomic data transfer took place. Since we want to keep the call to atomic_ref apart form the spin-wait loop (also because of the spin-wait loop may not be part of the parallel logic code), and also want to keep the SYNC MEMORY statement at a place of it's own in the parallel logic code, we use a checker routine instead of a getter routine. See the following code example:
+
+logical function Check_atomic_intImageActivityFlag_CA (Object_CA, intCheckImageActivityFlag)<br />
+&nbsp;&nbsp;! in order to hide the sync memory statement herein, this Checker routine does not allow<br />
+&nbsp;&nbsp;! to access the member directly, but instead does only allow to check the atomic member<br />
+&nbsp;&nbsp;! for specific values (this Checker is intentioned for synchronizations)<br />
+&nbsp;&nbsp;type (ImageStatus_CA), codimension[*], intent (inout) :: Object_CA<br />
+&nbsp;&nbsp;integer, intent (in) :: intCheckImageActivityFlag<br />
+&nbsp;&nbsp;integer :: intImageActivityFlag<br />
+&nbsp;&nbsp;!<br />
+&nbsp;&nbsp;Check_atomic_intImageActivityFlag_CA = .false.<br />
+&nbsp;&nbsp;!<br />
+&nbsp;&nbsp;call atomic_ref (intImageActivityFlag, Object_CA % m_atomic_intImageActivityFlag)<br />
+&nbsp;&nbsp;if (intCheckImageActivityFlag == intImageActivityFlag) then<br />
+&nbsp;&nbsp;&nbsp;&nbsp;call subSyncMemory (Object_CA) ! executing sync memory<br />
+&nbsp;&nbsp;&nbsp;&nbsp;Check_atomic_intImageActivityFlag_CA = .true.<br />
+&nbsp;&nbsp;end if<br />
+&nbsp;&nbsp;!<br />
+end function Check_atomic_intImageActivityFlag_CA<br />
+

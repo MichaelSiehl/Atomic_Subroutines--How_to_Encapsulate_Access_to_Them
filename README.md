@@ -50,3 +50,21 @@ end function Check_atomic_intImageActivityFlag_CA<br />
 
 Then, to make use of this Checker routine, we could use a spin-wait loop from the main logic code (well, the following code snippet is rather part of the parallel logic code), something like this (the code uses an enumeration):<br />
 
+...<br />
+do ! check the ImageActivityFlag in local PGAS memory until it has<br />
+&nbsp;&nbsp;&nbsp;! value Enum_ImageActivityFlag % ExecutionFinished<br />
+&nbsp;&nbsp;if (Check_atomic_intImageActivityFlag_CA (ImageStatus_CA_1, &<br />
+&nbsp;&nbsp;&nbsp;&nbsp;Enum_ImageActivityFlag % InitializeSegmentSynchronization)) then<br />
+&nbsp;&nbsp;&nbsp;&nbsp;! initialize the execution segment synchronization on the executing image<br />
+&nbsp;&nbsp;&nbsp;&nbsp;…<br />
+&nbsp;&nbsp;end if<br />
+&nbsp;&nbsp;!<br />
+&nbsp;&nbsp;if (Check_atomic_intImageActivityFlag_CA (ImageStatus_CA_1, &<br />
+&nbsp;&nbsp;&nbsp;&nbsp;Enum_ImageActivityFlag % ExecutionFinsihed)) then<br />
+&nbsp;&nbsp;&nbsp;&nbsp;! exit the loop<br />
+&nbsp;&nbsp;&nbsp;&nbsp;…<br />
+&nbsp;&nbsp;end if<br />
+&nbsp;&nbsp;!<br />
+end do<br />
+...<br />
+

@@ -52,7 +52,7 @@ Then, to make use of this Checker routine, we could use a spin-wait loop from th
 
 ...<br />
 do ! check the ImageActivityFlag in local PGAS memory until it has<br />
-&nbsp;&nbsp;&nbsp;! value Enum_ImageActivityFlag % ExecutionFinished<br />
+&nbsp;&nbsp;&nbsp;&nbsp;! value Enum_ImageActivityFlag % ExecutionFinished<br />
 &nbsp;&nbsp;if (Check_atomic_intImageActivityFlag_CA (ImageStatus_CA_1, &<br />
 &nbsp;&nbsp;&nbsp;&nbsp;Enum_ImageActivityFlag % InitializeSegmentSynchronization)) then<br />
 &nbsp;&nbsp;&nbsp;&nbsp;! initialize the execution segment synchronization on the executing image<br />

@@ -48,6 +48,7 @@ logical function Check_atomic_intImageActivityFlag_CA (Object_CA, intCheckImageA
 &nbsp;&nbsp;!<br />
 end function Check_atomic_intImageActivityFlag_CA<br />
 
+
 Then, to make use of this Checker routine, we could use a spin-wait loop from the main logic code (well, the following code snippet is rather part of the parallel logic code), something like this (the code uses an enumeration):<br />
 
 ...<br />
@@ -68,3 +69,6 @@ do ! check the ImageActivityFlag in local PGAS memory until it has<br />
 end do<br />
 ...<br />
 
+That way, the logic codes (parallel or main logic codes) remain without any call to atomic_ref and without any direct use of the SYNC MEMORY statement.
+
+(As an aside: In practice, spin-wait loop synchronizations must be implemented much more sophisticated then shown here).

@@ -48,3 +48,5 @@ logical function Check_atomic_intImageActivityFlag_CA (Object_CA, intCheckImageA
 &nbsp;&nbsp;!<br />
 end function Check_atomic_intImageActivityFlag_CA<br />
 
+Then, to make use of this Checker routine, we could use a spin-wait loop from the main logic code (well, the following code snippet is rather part of the parallel logic code), something like this (the code uses an enumeration):<br />
+

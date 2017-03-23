@@ -72,7 +72,7 @@ end if
 
 if (Check_atomic_intImageActivityFlag_CA (ImageStatus_CA_1, &
     Enum_ImageActivityFlag % ExecutionFinsihed)) then
-    ! exit the loop<br />
+    ! exit the loop
     ...
 end if
 

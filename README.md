@@ -24,11 +24,11 @@ Encapsulating access to atomic_define is very straightforward: We can easily use
 
 ```fortran
 subroutine Set_atomic_intImageActivityFlag_CA (Object_CA, intImageActivityFlag, intImageNumber)
-type (ImageStatus_CA), codimension[*], intent (inout) :: Object_CA
-integer, intent (in)                                  :: intImageActivityFlag
-integer, intent (in)                                  :: intImageNumber
+  type (ImageStatus_CA), codimension[*], intent (inout) :: Object_CA
+  integer, intent (in)                                  :: intImageActivityFlag
+  integer, intent (in)                                  :: intImageNumber
 
-call atomic_define (Object_CA[intImageNumber] % m_atomic_intImageActivityFlag, intImageActivityFlag)
+  call atomic_define (Object_CA[intImageNumber] % m_atomic_intImageActivityFlag, intImageActivityFlag)
 
 end subroutine Set_atomic_intImageActivityFlag_CA
 ```

@@ -28,6 +28,7 @@ subroutine Set_atomic_intImageActivityFlag_CA (Object_CA, intImageActivityFlag, 
   integer, intent (in)                                  :: intImageActivityFlag
   integer, intent (in)                                  :: intImageNumber
 
+  call subSyncMemory (Object_CA) ! execute sync memory (in practice, this is implemented as an option)
   call atomic_define (Object_CA[intImageNumber] % m_atomic_intImageActivityFlag, intImageActivityFlag)
 
 end subroutine Set_atomic_intImageActivityFlag_CA
@@ -51,7 +52,7 @@ logical function Check_atomic_intImageActivityFlag_CA (Object_CA, intCheckImageA
   call atomic_ref (intImageActivityFlag, Object_CA % m_atomic_intImageActivityFlag)
 
   if (intCheckImageActivityFlag == intImageActivityFlag) then
-    call subSyncMemory (Object_CA) ! executing sync memory
+    call subSyncMemory (Object_CA) ! execute sync memory
     Check_atomic_intImageActivityFlag_CA = .true.
   end if
 

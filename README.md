@@ -68,9 +68,7 @@ do ! check the ImageActivityFlag in local PGAS memory until it has
     ! initialize the execution segment synchronization on the executing image
     …
     ...
-  end if
-
-  if (Check_atomic_intImageActivityFlag_CA (ImageStatus_CA_1, &
+  else if (Check_atomic_intImageActivityFlag_CA (ImageStatus_CA_1, &
     Enum_ImageActivityFlag % ExecutionFinsihed)) then
     ! exit the loop
     ...

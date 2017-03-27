@@ -10,8 +10,8 @@ Assume the following type definition and coarray declaration in a module:
 
 ```fortran
 type, public :: ImageStatus_CA
-private
-integer(atomic_int_kind) :: m_atomic_intImageActivityFlag = 0
+  private
+  integer(atomic_int_kind) :: m_atomic_intImageActivityFlag = 0
 end type OOOPimsc_adtImageStatus_CA
 
 ! Coarray Declaration:

@@ -62,19 +62,19 @@ Then, to make use of this Checker routine, we could use a spin-wait loop from th
 
 ```fortran
 do ! check the ImageActivityFlag in local PGAS memory until it has
-! value Enum_ImageActivityFlag % ExecutionFinished
-if (Check_atomic_intImageActivityFlag_CA (ImageStatus_CA_1, &
+  ! value Enum_ImageActivityFlag % ExecutionFinished
+  if (Check_atomic_intImageActivityFlag_CA (ImageStatus_CA_1, &
     Enum_ImageActivityFlag % InitializeSegmentSynchronization)) then
     ! initialize the execution segment synchronization on the executing image
     …
     ...
-end if
+  end if
 
-if (Check_atomic_intImageActivityFlag_CA (ImageStatus_CA_1, &
+  if (Check_atomic_intImageActivityFlag_CA (ImageStatus_CA_1, &
     Enum_ImageActivityFlag % ExecutionFinsihed)) then
     ! exit the loop
     ...
-end if
+  end if
 
 end do
 ...

@@ -39,21 +39,21 @@ The first reflex to encapsulate access to atomic_ref may be to use a traditional
 
 ```fortran
 logical function Check_atomic_intImageActivityFlag_CA (Object_CA, intCheckImageActivityFlag)
-! in order to hide the sync memory statement herein, this Checker routine does not allow
-! to access the member directly, but instead does only allow to check the atomic member
-! for specific values (this Checker is intentioned for synchronizations)
-type (ImageStatus_CA), codimension[*], intent (inout) :: Object_CA
-integer, intent (in)                                  :: intCheckImageActivityFlag
-integer                                               :: intImageActivityFlag
+  ! in order to hide the sync memory statement herein, this Checker routine does not allow
+  ! to access the member directly, but instead does only allow to check the atomic member
+  ! for specific values (this Checker is intentioned for synchronizations)
+  type (ImageStatus_CA), codimension[*], intent (inout) :: Object_CA
+  integer, intent (in)                                  :: intCheckImageActivityFlag
+  integer                                               :: intImageActivityFlag
 
-Check_atomic_intImageActivityFlag_CA = .false.
+  Check_atomic_intImageActivityFlag_CA = .false.
 
-call atomic_ref (intImageActivityFlag, Object_CA % m_atomic_intImageActivityFlag)
+  call atomic_ref (intImageActivityFlag, Object_CA % m_atomic_intImageActivityFlag)
 
-if (intCheckImageActivityFlag == intImageActivityFlag) then
+  if (intCheckImageActivityFlag == intImageActivityFlag) then
     call subSyncMemory (Object_CA) ! executing sync memory
     Check_atomic_intImageActivityFlag_CA = .true.
-end if
+  end if
 
 end function Check_atomic_intImageActivityFlag_CA
 ```
